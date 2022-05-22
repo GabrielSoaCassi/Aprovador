@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Aprovação</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Reclamante</li>
+    </ol>
+  </nav>
+  <main class="d-flex justify-content-center m-5 p-5">
+    <table class="table table-success table-striped table-bordered col-md-auto">
+      <thead class="text-center">
+        <th>Nome</th>
+      </thead>
+      <tbody class="text-center">
+        <tr scope="row" *ngFor="let reclamante of reclamantes">
+          <td>{{ reclamante.nome }}</td>
+          <td (click)="passarIdReclamante(reclamante.id)"><button>Editar</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</div>

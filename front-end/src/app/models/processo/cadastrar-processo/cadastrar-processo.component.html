@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a>Aprovação</a></li>
+      <li class="breadcrumb-item">
+        <a routerLink="/processos">Processos</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Cadastrar Processo
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="container-fluid col-md-4">
+  <form class="row g-3" (ngSubmit)="cadastrarProcesso()" #cadastrarForm="ngForm">
+    <div class="col">
+      <label for="numeroDeProcesso" class="form-label">Nº de Processo (Somente números)</label>
+      <input [textMask]="cnjMask" required maxlength="20" max="20" type="text" class="form-control"
+        id="numeroDeProcesso" [(ngModel)]="numeroDeProcesso" name="numero" #inputInvalid="ngModel" />
+      <p *ngIf="inputInvalid.invalid && inputInvalid.touched" class="text-danger">
+        Digite corretamente o nº do processo (SOMENTE NÚMEROS)
+      </p>
+    </div>
+    <div class="col-12">
+      <label for="valorCausa" class="form-label">Valor da causa</label>
+      <input type="number" class="form-control" id="valorCausa" placeholder="R$35000" [(ngModel)]="valorCausa"
+        name="valor" />
+    </div>
+    <div>
+      <div class="col-auto">
+        <label for="reclamante" class="form-label m-2">Reclamante</label>
+        <select class="form-select" [(ngModel)]="reclamanteId" [ngModelOptions]="{ standalone: true }">
+          <option *ngFor="let reclamante of reclamantes" [value]="reclamante.id">
+            {{ reclamante.nome }}
+          </option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <label for="escritorioId" class="form-label m-2">Escritório</label>
+        <select class="form-select" [(ngModel)]="escritorioId" [ngModelOptions]="{ standalone: true }">
+          <option *ngFor="let escritorio of escritorios" [value]="escritorio.id">
+            {{ escritorio.nome }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6 justify-content-end mt-1">
+      <button type="submit" class="btn btn-success" [disabled]="cadastrarForm.invalid">
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>

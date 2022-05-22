@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink=""><a>Aprovação</a></li>
+      <li class="breadcrumb-item">
+        <a routerLink="/escritorios">Escritório</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Cadastrar escritório
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="container-fluid col-md-4">
+  <form class="justify-content-center mt-5" (ngSubmit)="cadastrarEscritorio()" #cadastrarForm="ngForm">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome do escritório</label>
+      <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do escritorio" [(ngModel)]="nome"
+        required minlength="5" maxlength="50" #nomeInvalido="ngModel" />
+      <p *ngIf="nomeInvalido.invalid && nomeInvalido.touched" class="text-danger">Digite um nome para o escritório</p>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="cadastrarForm.invalid">Cadastrar</button>
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="">Aprovação</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Escritório</li>
+    </ol>
+  </nav>
+  <main class="d-flex justify-content-center m-5 p-5">
+    <table class="table table-success table-striped col-md-auto">
+      <thead class="text-center">
+        <th>Nome do escritório</th>
+      </thead>
+      <tbody class="text-center">
+          <tr *ngFor="let escritorio of escritorios">
+            <td>{{ escritorio.nome }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </main>
+</div>
