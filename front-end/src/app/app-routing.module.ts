@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'escritorios/editar/:id', component: EditarEscritorioComponent },
   { path: 'processos', component: ProcessoComponent },
   { path: 'processos/cadastrar', component: CadastrarProcessoComponent },
-  { path: 'processos/editar', component: EditarProcessoComponent },
+  { path: 'processos/editar/:id', component: EditarProcessoComponent },
 ];
 
 @NgModule({

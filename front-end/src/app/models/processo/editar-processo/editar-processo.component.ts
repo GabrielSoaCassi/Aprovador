@@ -6,6 +6,7 @@ import { ProcessoService } from './../processo.service';
 import { Component, OnInit } from '@angular/core';
 import { ReclamanteService } from '../../reclamante/reclamante.service';
 import { EscritorioService } from '../../escritorio/escritorio.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-editar-processo',
   templateUrl: './editar-processo.component.html',
@@ -14,7 +15,7 @@ import { EscritorioService } from '../../escritorio/escritorio.service';
 export class EditarProcessoComponent implements OnInit {
   reclamantes!: Reclamante[];
   escritorios!: Escritorio[];
-  processos!: Processo[];
+  processo: Processo;
   processoEditado: Processo;
   id: number;
   valorCausa: number;
@@ -27,6 +28,7 @@ export class EditarProcessoComponent implements OnInit {
     private processoService: ProcessoService,
     private reclamanteService: ReclamanteService,
     private escritorioService: EscritorioService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -37,14 +39,19 @@ export class EditarProcessoComponent implements OnInit {
     this.escritorioService
       .listarEscritorios()
       .subscribe(escritorio => this.escritorios = escritorio);
+      this.buscarProcessoParaEditar();
+  }
 
+  private buscarProcessoParaEditar() {
+    let processoId: number;
+    this.activatedRoute.params.subscribe(params => processoId = params.id);
     this.processoService
-      .listarProcessos()
-      .subscribe(processo => this.processos = processo)
+      .pesquisarProcessoPorId(processoId)
+      .subscribe(processo => this.processo = processo);
   }
 
   editarProcesso(): void {
-    if (this.id == null || this.id == undefined || this.valorCausa < 30000
+    if (this.processo.id == null || this.processo.id == undefined || this.valorCausa < 30000
         || this.escritorioId <= 0 || this.reclamanteId <= 0 || this.estadoId == null)
         throw new Error()
     if (this.estadoId == 1)
@@ -52,8 +59,8 @@ export class EditarProcessoComponent implements OnInit {
     else
       this.estadoId = EProcessoEstado.recusado
     this.processoEditado = {
-      id: this.id,
-      numeroDeProcesso: this.processos.find(processo => processo.id == this.id).numeroDeProcesso,
+      id: this.processo.id,
+      numeroDeProcesso: this.processo.numeroDeProcesso,
       valorCausa: this.valorCausa,
       escritorioId: this.escritorioId,
       reclamanteId: this.reclamanteId,

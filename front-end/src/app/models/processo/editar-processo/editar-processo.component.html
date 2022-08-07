@@ -13,22 +13,16 @@
 </div>
 <div class="container-fluid col-md-4">
   <form class="row g-3" (ngSubmit)="editarProcesso()" #editarProcessoForm="ngForm">
-    <div class="col-lg-12">
-      <label for="numeroDeProcesso" class="form-label p-1">Id</label>
-      <select  [ngModelOptions]="{ standalone: true }"  [(ngModel)]="id"  name="id">
-        <option *ngFor="let processo of processos" [value]="processo.id">
-          {{ processo.id }}
-        </option>
-      </select>
-    </div>
     <div class="col-12">
-      <label for="valorCausa" class="form-label">Valor da causa</label>
+      <p>Numero do Processo</p>
+      <input disabled [value]="processo?.numeroDeProcesso">
+      <p for="valorCausa" class="form-label">Valor da causa</p>
       <input
         required
         type="number"
         class="form-control"
         id="valorCausa"
-        placeholder="35000"
+        [placeholder]="processo.valorCausa + '  Valor Atual do processo'"
         [(ngModel)]="valorCausa"
         [ngModelOptions]="{ standalone: true }"
         #valor="ngModel"
@@ -42,6 +36,7 @@
     <div>
       <div class="col-md-3">
         <label for="reclamante" class="form-label m-2">Reclamante</label>
+        <input disabled [value]="processo.reclamante.nome">
         <select class="form-select px-5" [(ngModel)]="reclamanteId" name="reclamante" required>
           <option *ngFor="let reclamante of reclamantes" [value]="reclamante.id">
             {{ reclamante.nome }}
@@ -50,6 +45,7 @@
       </div>
       <div class="col-md-3">
         <label for="escritorioId" class="form-label m-2">Escritorio</label>
+        <input disabled [value]="processo.escritorio.nome">
         <select class="form-select px-5" [(ngModel)]="escritorioId" name="escritorio" required >
           <option *ngFor="let escritorio of escritorios" [value]="escritorio.id">
             {{ escritorio.nome }}
