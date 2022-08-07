@@ -14,6 +14,9 @@ export class EscritorioService {
   listarEscritorios = (): Observable<Escritorio[]> =>
     this.http.get<Escritorio[]>(`${rota}/escritorio`);
 
+  listarEscritorioPorId = (id:number): Observable<Escritorio> =>
+    this.http.get<Escritorio>(`${rota}/escritorio/${id}`);
+
   cadastrarEscritorios = (nome: Escritorio): Observable<Escritorio> =>
     this.http.post<Escritorio>(`${rota}/escritorio`, nome);
 

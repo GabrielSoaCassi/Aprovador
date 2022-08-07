@@ -13,12 +13,11 @@ import { EditarProcessoComponent } from './models/processo/editar-processo/edita
 const routes: Routes = [
   { path: '', component: ProcessoComponent },
   { path: 'reclamantes', component: ReclamanteComponent },
-  { path: 'reclamantes/editar', component: EditarReclamanteComponent },
   { path: 'reclamantes/editar/:id', component: EditarReclamanteComponent },
   { path: 'reclamantes/cadastrar', component: CadastrarReclamantesComponent },
   { path: 'escritorios', component: EscritorioComponent },
   { path: 'escritorios/cadastrar', component: CadastrarEscritorioComponent },
-  { path: 'escritorios/editar', component: EditarEscritorioComponent },
+  { path: 'escritorios/editar/:id', component: EditarEscritorioComponent },
   { path: 'processos', component: ProcessoComponent },
   { path: 'processos/cadastrar', component: CadastrarProcessoComponent },
   { path: 'processos/editar', component: EditarProcessoComponent },

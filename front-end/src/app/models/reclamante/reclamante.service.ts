@@ -13,6 +13,9 @@ export class ReclamanteService {
   listarReclamantes = (): Observable<Reclamante[]> =>
     this.http.get<Reclamante[]>(`${rota}/reclamante`)
 
+  listarReclamantePorId = (id :number): Observable<Reclamante> =>
+    this.http.get<Reclamante>(`${rota}/reclamante/${id}`)
+
   cadastrarReclamante = (nomeReclamante: Reclamante): Observable<Reclamante> =>
     this.http.post<Reclamante>(`${rota}/reclamante`, nomeReclamante)
 

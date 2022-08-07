@@ -1,6 +1,7 @@
 import { ReclamanteService } from './reclamante.service';
 import { Component, OnInit } from '@angular/core';
 import { Reclamante } from '../interface/Reclamante';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reclamante',
@@ -9,7 +10,8 @@ import { Reclamante } from '../interface/Reclamante';
 export class ReclamanteComponent implements OnInit {
   reclamantes: Reclamante[];
   id: number;
-  constructor(private reclamanteService: ReclamanteService) {}
+  constructor(private reclamanteService: ReclamanteService,
+      private route : Router) {}
 
   ngOnInit(): void {
     this.reclamanteService
@@ -18,6 +20,6 @@ export class ReclamanteComponent implements OnInit {
   }
 
   passarIdReclamante(idDoReclamante:number) {
-    console.log(idDoReclamante);
+    this.route.navigate(['reclamantes/editar',idDoReclamante])
   }
 }

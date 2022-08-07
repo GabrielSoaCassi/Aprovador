@@ -58,7 +58,7 @@ export class CadastrarProcessoComponent implements OnInit {
       estadoId: this.estadoId,
       ativo: true
     };
-    this.processoService.cadastrarProcesso(this.processo).subscribe(() => alert('Processo cadastrado com sucesso!!'));
+    this.processoService.cadastrarProcesso(this.processo).subscribe(() => {this.processo,alert('Processo cadastrado com sucesso!!')});
     this.numeroDeProcesso = '';
     this.valorCausa = 0;
   }

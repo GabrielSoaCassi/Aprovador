@@ -18,17 +18,18 @@ namespace BackEndAprovacao.Repository
         public List<Processo> PesquisarTodos()
         {
             var resultadoDoSelect = from processos in _aprovacaoContext.Processos
-                            where processos.Ativo
-                            select new Processo()
-                            {
-                                Id = processos.Id,
-                                NumeroDeProcesso = processos.NumeroDeProcesso,
-                                ValorCausa = processos.ValorCausa,
-                                Escritorio = processos.Escritorio,
-                                Reclamante = processos.Reclamante,
-                                EstadoId = processos.EstadoId
-                            };
-            return resultadoDoSelect.ToList();
+                                    where processos.Ativo
+                                    select new Processo()
+                                    {
+                                        Id = processos.Id,
+                                        NumeroDeProcesso = processos.NumeroDeProcesso,
+                                        ValorCausa = processos.ValorCausa,
+                                        Escritorio = processos.Escritorio,
+                                        Reclamante = processos.Reclamante,
+                                        EstadoId = processos.EstadoId
+                                    };
+            var resultado = resultadoDoSelect.ToList();
+            return resultado;
         }
     }
 }

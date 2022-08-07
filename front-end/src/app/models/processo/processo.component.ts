@@ -15,6 +15,7 @@ export class ProcessoComponent implements OnInit {
   {
     this.processoService
       .listarProcessos()
-      .subscribe(processo => this.processos = processo);
+      .subscribe(processo => {this.processos = processo
+        console.log(processo)});
   }
 }

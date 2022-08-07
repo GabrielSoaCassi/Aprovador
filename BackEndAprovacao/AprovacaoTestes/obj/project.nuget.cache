@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qeMY9CyzX740mmQrA3eXvVt2SSEY/O3YY/+x0JlKi+lmzfncAnGDz10U4XeRBkIsE+HvrXZh6QD/AnDO5b1BQQ==",
+  "dgSpecHash": "/uSaM/oxPT6iTFXZadsX8kHfWuT7xS0xYVlNUpvEt2Uv3iwaaQEhLsBJres2Saniq6blu/gBCOH40CU/3ukHjQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PrimoGames\\Downloads\\BackEndAprovacao-20220423T174830Z-001\\BackEndAprovacao\\AprovacaoTestes\\AprovacaoTestes.csproj",
+  "projectFilePath": "C:\\Users\\PrimoGames\\Documents\\Estudo\\ToDoList\\Aprovador\\BackEndAprovacao\\AprovacaoTestes\\AprovacaoTestes.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PrimoGames\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\PrimoGames\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

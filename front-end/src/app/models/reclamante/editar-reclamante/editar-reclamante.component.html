@@ -13,16 +13,9 @@
 </div>
 <div class="container-fluid col-md-4">
   <form class="justify-content-center mt-5" (ngSubmit)="editarReclamante()" #cadastrarForm="ngForm">
-    <div class="col-md-4 pb-2">
-      <label for="reclamante" class="form-label">Nome antigo</label>
-      <select class="form-select" [(ngModel)]="reclamanteId" [ngModelOptions]="{standalone: true}">
-        <option *ngFor="let reclamante of reclamantes" [value]="reclamante.id">
-          {{ reclamante.nome }}
-        </option>
-      </select>
-    </div>
     <div class="mb-3">
-      <label for="nome" class="form-label">Nome novo</label>
+      <input type="text" disabled [ngModel]="reclamante?.nome" name="nomeAntigo">
+      <p for="nome" class="form-label my-2">Nome novo</p>
       <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do reclamante" [(ngModel)]="nome"
         required maxlength="100" #nomeInvalido="ngModel" />
       <p *ngIf="nomeInvalido.invalid && nomeInvalido.touched" class="text-danger">Digite um nome para o reclamante</p>

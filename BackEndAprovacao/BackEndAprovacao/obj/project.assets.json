@@ -7741,11 +7741,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PrimoGames\\Downloads\\BackEndAprovacao-20220423T174830Z-001\\BackEndAprovacao\\BackEndAprovacao\\BackEndAprovacao.csproj",
+      "projectUniqueName": "C:\\Users\\PrimoGames\\Documents\\Estudo\\ToDoList\\Aprovador\\BackEndAprovacao\\BackEndAprovacao\\BackEndAprovacao.csproj",
       "projectName": "BackEndAprovacao",
-      "projectPath": "C:\\Users\\PrimoGames\\Downloads\\BackEndAprovacao-20220423T174830Z-001\\BackEndAprovacao\\BackEndAprovacao\\BackEndAprovacao.csproj",
+      "projectPath": "C:\\Users\\PrimoGames\\Documents\\Estudo\\ToDoList\\Aprovador\\BackEndAprovacao\\BackEndAprovacao\\BackEndAprovacao.csproj",
       "packagesPath": "C:\\Users\\PrimoGames\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PrimoGames\\Downloads\\BackEndAprovacao-20220423T174830Z-001\\BackEndAprovacao\\BackEndAprovacao\\obj\\",
+      "outputPath": "C:\\Users\\PrimoGames\\Documents\\Estudo\\ToDoList\\Aprovador\\BackEndAprovacao\\BackEndAprovacao\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -7831,7 +7831,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -25,11 +25,14 @@ namespace BackEndAprovacao.Services
         }
 
         public Processo Cadastrar(Processo processo)
-        {
+        {   
             if (!string.IsNullOrEmpty(processo.NumeroDeProcesso) &&
                 !string.IsNullOrWhiteSpace(processo.NumeroDeProcesso) &&
                 processo.NumeroDeProcesso.Length == 20 && processo.ValorCausa > 30000)
+            {
+                processo.Ativo = true;
                 return _processo.Adicionar(processo);
+            }
             else
                 throw new ArgumentException("O número do processo está inconsistente, ou o valor está menor que R$30.000,00 verifique e tente novamente");
         }

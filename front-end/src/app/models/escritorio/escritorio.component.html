@@ -13,6 +13,7 @@
       <tbody class="text-center">
           <tr *ngFor="let escritorio of escritorios">
             <td>{{ escritorio.nome }}</td>
+            <td (click)="passarIdEscritorio(escritorio.id)"><button>editar</button></td>
           </tr>
       </tbody>
     </table>

@@ -23,6 +23,7 @@
           <td>{{ processo.reclamante.nome }}</td>
           <td>{{ processo.escritorio.nome }}</td>
           <td>{{ processo.estado }}</td>
+          <td (click)="passarIdProcesso(processo.id)"><button>editar</button></td>
         </tr>
       </tbody>
     </table>

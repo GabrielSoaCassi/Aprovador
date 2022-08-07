@@ -36,7 +36,7 @@ namespace BackEndAprovacao.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult PesquisarReclamantePorId(int id)
+        public IActionResult PesquisarReclamantePorId([FromRoute]int id)
         {
             return Ok(_reclamanteService.Pesquisar(id));
         }
