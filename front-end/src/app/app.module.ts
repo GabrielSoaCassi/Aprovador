@@ -19,7 +19,6 @@ import { CadastrarProcessoComponent } from './models/processo/cadastrar-processo
 import { EditarReclamanteComponent } from './models/reclamante/editar-reclamante/editar-reclamante.component';
 import { EditarEscritorioComponent } from './models/escritorio/editar-escritorio/editar-escritorio.component';
 import { EditarProcessoComponent } from './models/processo/editar-processo/editar-processo.component';
-import { ModalComponent } from './shared/modal/modal.component';
 
 @NgModule({
   imports: [
@@ -45,7 +44,6 @@ import { ModalComponent } from './shared/modal/modal.component';
     EditarReclamanteComponent,
     EditarEscritorioComponent,
     EditarProcessoComponent,
-    ModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
