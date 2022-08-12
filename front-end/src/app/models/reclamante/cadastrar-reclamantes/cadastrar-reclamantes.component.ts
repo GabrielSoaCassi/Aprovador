@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Reclamante } from '../../interface/Reclamante';
 import { ReclamanteService } from '../reclamante.service';
 
@@ -6,22 +8,40 @@ import { ReclamanteService } from '../reclamante.service';
   selector: 'app-cadastrar-reclamantes',
   templateUrl: './cadastrar-reclamantes.component.html',
 })
-export class CadastrarReclamantesComponent {
-  Reclamante!: Reclamante;
-  nome!: string;
-  constructor(private reclamanteService: ReclamanteService) { }
+export class CadastrarReclamantesComponent implements OnChanges{
+  reclamante!: Reclamante;
+  reclamanteForm: FormGroup;
+  sucessoPost:boolean = false
+  erroPost:boolean = true
 
+  constructor(
+    private reclamanteService: ReclamanteService,
+    private fb: FormBuilder)
+     {
+    this.reclamanteForm = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(5)]],
+    });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      if(changes.erroPost)
+        console.log('toerrado')
+  }
   cadastrarReclamante(): void {
-    if (this.nome == null || this.nome == undefined) {
-      throw new Error()
-    }
-    this.Reclamante = { nome: this.nome }
-    if (this.Reclamante.nome !== null || this.Reclamante.nome !== undefined)
-    {
+      this.reclamante = {
+        nome: this.reclamanteForm.controls.nome.value
+      }
+      console.log(this.reclamante)
+    if (this.reclamante.nome !== null || this.reclamante.nome !== undefined) {
       this.reclamanteService
-        .cadastrarReclamante(this.Reclamante)
-        .subscribe(() => alert('Reclamante cadastrado com sucesso!'));
-      this.nome = '';
+        .cadastrarReclamante(this.reclamante)
+        .subscribe(() => {
+          this.sucessoPost = true,
+          this.reclamanteForm.reset()},
+        (err:HttpErrorResponse) =>{ console.log('Deu Erro', this.erroPost = err.ok)})
     }
+  }
+  fecharAlerta():void{
+    this.erroPost = true
+    this.sucessoPost = false
   }
 }
