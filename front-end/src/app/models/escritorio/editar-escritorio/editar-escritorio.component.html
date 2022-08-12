@@ -11,15 +11,26 @@
     </ol>
   </nav>
 </div>
+<div [hidden]="erroPost" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erro ao tentar editar o Escritório</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+  </button>
+</div>
 <div class="container-fluid col-md-4">
-  <form class="justify-content-center mt-5" (ngSubmit)="editarEscritorio()" #cadastrarForm="ngForm">
-    <input disabled type="text" [ngModel]="escritorio?.nome" name="nomeAntigo">
+  <div [hidden]="!sucessoPost" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Escritório alterado com sucesso</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+    </button>
+  </div>
+<div class="container-fluid col-md-8">
+  <form class="justify-content-center mt-5" (ngSubmit)="editarEscritorio()" [formGroup]="escritorioForm">
     <div class="mb-3">
       <p for="nome" class="form-label my-2">Nome novo</p>
-      <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do escritório" [(ngModel)]="nome"
-        required minlength="5" maxlength="50" #nomeInvalido="ngModel" />
-      <p *ngIf="nomeInvalido.invalid && nomeInvalido.touched" class="text-danger">Digite um nome para o escritorio</p>
+      <input type="text" class="form-control" formControlName="nome"/>
+      <p *ngIf="escritorioForm.controls.nome.invalid && escritorioForm.controls.nome.touched" class="text-danger">Digite um nome para o escritorio</p>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="cadastrarForm.invalid">Atualizar</button>
+    <button type="submit" class="btn btn-success" [disabled]="escritorioForm.invalid">Atualizar</button>
   </form>
 </div>
