@@ -40,6 +40,7 @@ export class CadastrarReclamantesComponent implements OnChanges{
         (err:HttpErrorResponse) =>{ console.log('Deu Erro', this.erroPost = err.ok)})
     }
   }
+
   fecharAlerta():void{
     this.erroPost = true
     this.sucessoPost = false

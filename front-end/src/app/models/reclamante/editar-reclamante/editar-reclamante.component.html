@@ -11,15 +11,26 @@
     </ol>
   </nav>
 </div>
+<div [hidden]="erroPost"class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erro ao tentar Aatualizar o reclamante</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+  </button>
+</div>
 <div class="container-fluid col-md-4">
-  <form class="justify-content-center mt-5" (ngSubmit)="editarReclamante()" #cadastrarForm="ngForm">
+<div [hidden]="!sucessoPost"class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Reclamante Atualizado com sucesso</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+  </button>
+</div>
+<div class="container-fluid col-md-8">
+  <form class="justify-content-center mt-5" (ngSubmit)="editarReclamante()" [formGroup]="reclamanteForm">
     <div class="mb-3">
-      <input type="text" disabled [ngModel]="reclamante?.nome" name="nomeAntigo">
-      <p for="nome" class="form-label my-2">Nome novo</p>
-      <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do reclamante" [(ngModel)]="nome"
-        required maxlength="100" #nomeInvalido="ngModel" />
-      <p *ngIf="nomeInvalido.invalid && nomeInvalido.touched" class="text-danger">Digite um nome para o reclamante</p>
+      <p for="nome" class="form-label my-2">Nome</p>
+      <input type="text" class="form-control" formControlName="nome" />
+      <p *ngIf="reclamanteForm.controls.nome.touched && reclamanteForm.controls.nome.invalid" class="text-danger">Digite um nome para o reclamante</p>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="cadastrarForm.invalid">Atualizar</button>
+    <button type="submit" class="btn btn-success" [disabled]="reclamanteForm.invalid">Atualizar</button>
   </form>
 </div>

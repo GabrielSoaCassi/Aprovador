@@ -1,49 +1,67 @@
 import { ReclamanteService } from './../reclamante.service';
 import { Reclamante } from './../../interface/Reclamante';
-import { Component, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-editar-reclamante',
   templateUrl: './editar-reclamante.component.html',
 })
-export class EditarReclamanteComponent implements OnInit,OnChanges {
-  reclamante:Reclamante;
-  reclamanteNovo: Reclamante;
+export class EditarReclamanteComponent implements OnInit, OnChanges {
   reclamanteId: number;
-  nome: string;
-  constructor(private reclamanteService: ReclamanteService,
-              private activeRoute:ActivatedRoute) { }
-
-  ngOnInit(): void {
-    this.buscarReclamanteParaEditar()
+  reclamante: Reclamante;
+  reclamanteForm: FormGroup;
+  sucessoPost: boolean = false;
+  erroPost: boolean = true;
+  constructor(
+    private reclamanteService: ReclamanteService,
+    private activeRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.reclamanteForm = this.fb.group({
+      nome: ['', [Validators.required, Validators.min(5)]],
+    });
   }
 
-  ngOnChanges(change:SimpleChanges):void{
-    if(change.reclamante)
-      this.buscarReclamanteParaEditar()
+  ngOnInit(): void {
+    this.buscarReclamanteParaEditar();
+  }
+
+  ngOnChanges(change: SimpleChanges): void {
+    if (change.reclamante) console.log('mudei');
   }
 
   buscarReclamanteParaEditar() {
-    let reclamanteId:number
-    this.activeRoute.params.subscribe(params => reclamanteId = params.id )
+    this.activeRoute.params.subscribe(
+      (params) => (this.reclamanteId = params.id)
+    );
     this.reclamanteService
-     .listarReclamantePorId(reclamanteId)
-     .subscribe(reclamante => this.reclamante = reclamante);
+      .listarReclamantePorId(this.reclamanteId)
+      .subscribe((reclamante) => {
+        this.reclamanteForm.patchValue({ ...reclamante });
+      });
   }
 
   editarReclamante(): void {
-    if (this.reclamante.id == null
-      || this.reclamante.id == undefined
-      || this.nome == ''
-      || this.nome == null
-      || this.nome == undefined)
-        throw new Error()
+    var reclamanteNovo: Reclamante = {
+      id: this.reclamanteId,
+      nome: this.reclamanteForm.controls.nome.value,
+    };
+    this.reclamanteService.atualizarReclamante(reclamanteNovo).subscribe(
+      () => (this.sucessoPost = true),
+      (err: HttpErrorResponse) => (this.erroPost = err.ok)
+    );
+  }
 
-    this.reclamanteNovo = {
-      id: this.reclamante.id,
-      nome: this.nome
-    }
-    this.reclamanteService.atualizarReclamante(this.reclamanteNovo).subscribe(() => alert('Nome do reclamante atualizado!!'))
-    this.nome = '';
+  fecharAlerta(): void {
+    this.erroPost = true;
+    this.sucessoPost = false;
   }
 }
