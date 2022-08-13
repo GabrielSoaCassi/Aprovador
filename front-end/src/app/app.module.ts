@@ -29,7 +29,7 @@ import { EditarProcessoComponent } from './models/processo/editar-processo/edita
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule,
+    CommonModule
   ],
   declarations: [
     AppComponent,

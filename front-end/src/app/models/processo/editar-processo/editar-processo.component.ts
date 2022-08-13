@@ -7,67 +7,79 @@ import { Component, OnInit } from '@angular/core';
 import { ReclamanteService } from '../../reclamante/reclamante.service';
 import { EscritorioService } from '../../escritorio/escritorio.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaskValidator } from 'src/app/shared/masks';
+import { ProcessoDTO } from '../../interface/DTO/ProcessoDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-editar-processo',
   templateUrl: './editar-processo.component.html',
-
 })
 export class EditarProcessoComponent implements OnInit {
   reclamantes!: Reclamante[];
   escritorios!: Escritorio[];
-  processo: Processo;
-  processoEditado: Processo;
-  id: number;
-  valorCausa: number;
-  reclamanteId: number;
-  escritorioId: number;
-  estadoId: EProcessoEstado;
-  ativo:boolean;
+  processoForm: FormGroup;
+  processoId: number;
+  postSucess: boolean = false;
+  erroPost: boolean = true;
 
   constructor(
     private processoService: ProcessoService,
     private reclamanteService: ReclamanteService,
     private escritorioService: EscritorioService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.processoForm = this.fb.group({
+      numeroDeProcesso: [{ value: '', disabled: true }],
+      valorCausa: ['', [Validators.required, Validators.min(30000)]],
+      reclamanteId: [null, [Validators.required]],
+      escritorioId: [null, [Validators.required]],
+      estadoId: [null],
+      ativo: [],
+    });
+  }
 
   ngOnInit(): void {
     this.reclamanteService
       .listarReclamantes()
-      .subscribe(reclamante => this.reclamantes = reclamante);
+      .subscribe((reclamante) => (this.reclamantes = reclamante));
 
     this.escritorioService
       .listarEscritorios()
-      .subscribe(escritorio => this.escritorios = escritorio);
-      this.buscarProcessoParaEditar();
+      .subscribe((escritorio) => (this.escritorios = escritorio));
+    this.buscarProcessoParaEditar();
   }
 
   private buscarProcessoParaEditar() {
-    let processoId: number;
-    this.activatedRoute.params.subscribe(params => processoId = params.id);
+    this.activatedRoute.params.subscribe(
+      (params) => (this.processoId = params.id)
+    );
     this.processoService
-      .pesquisarProcessoPorId(processoId)
-      .subscribe(processo => this.processo = processo);
+      .pesquisarProcessoPorId(this.processoId)
+      .subscribe((processo) => this.processoForm.patchValue({ ...processo }));
   }
 
   editarProcesso(): void {
-    if (this.processo.id == null || this.processo.id == undefined || this.valorCausa < 30000
-        || this.escritorioId <= 0 || this.reclamanteId <= 0 || this.estadoId == null)
-        throw new Error()
-    if (this.estadoId == 1)
-      this.estadoId = EProcessoEstado.aprovado
-    else
-      this.estadoId = EProcessoEstado.recusado
-    this.processoEditado = {
-      id: this.processo.id,
-      numeroDeProcesso: this.processo.numeroDeProcesso,
-      valorCausa: this.valorCausa,
-      escritorioId: this.escritorioId,
-      reclamanteId: this.reclamanteId,
-      estadoId: this.estadoId,
-      ativo:this.ativo
-    }
-    var processo = this.processoEditado
-    this.processoService.atualizarProcesso(processo).subscribe(() => { alert('Processo atualizado!')})
+    let processoEditado: ProcessoDTO = {
+      numeroDeProcesso: this.processoForm.controls.numeroDeProcesso.value,
+      valorCausa: this.processoForm.controls.valorCausa.value,
+      reclamanteId: this.processoForm.controls.reclamanteId.value,
+      escritorioId: this.processoForm.controls.escritorioId.value,
+      estadoId: this.processoForm.controls.estadoId.value,
+      ativo: this.processoForm.controls.ativo.value,
+    };
+    console.log('To aqui', processoEditado);
+    this.processoService.atualizarProcesso(processoEditado).subscribe(
+      () => {
+        this.postSucess = true;
+      },
+      (err: HttpErrorResponse) => (this.erroPost = err.ok)
+    );
+  }
+
+  fecharAlerta(): void {
+    this.erroPost = true;
+    this.postSucess = false;
   }
 }

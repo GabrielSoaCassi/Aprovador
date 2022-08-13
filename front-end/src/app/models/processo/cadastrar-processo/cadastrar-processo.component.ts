@@ -1,24 +1,25 @@
-import { cnjMask, mask } from './../../../shared/masks';
+import { cnjMask, mask, MaskValidator } from './../../../shared/masks';
 import { ProcessoService } from './../processo.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,} from '@angular/core';
 import { ReclamanteService } from '../../reclamante/reclamante.service';
 import { EscritorioService } from '../../escritorio/escritorio.service';
 import { Escritorio } from '../../interface/Escritorio';
 import { Reclamante } from '../../interface/Reclamante';
-import { Processo } from '../../interface/Processo';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProcessoDTO } from '../../interface/DTO/ProcessoDTO';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-cadastrar-processo',
   templateUrl: './cadastrar-processo.component.html',
+  styleUrls: ['./cadastrar-processo.scss']
 })
 export class CadastrarProcessoComponent implements OnInit {
-  processo: Processo;
   escritorios!: Escritorio[];
   reclamantes!: Reclamante[];
-  numeroDeProcesso!: string;
-  valorCausa!: number;
-  reclamanteId!: number;
-  escritorioId!: number;
-  estadoId!: number;
+  processoForm:FormGroup
+  postSucess:boolean = false
+  erroPost:boolean = true
+
 
   cnjMask: mask =
   {
@@ -31,7 +32,16 @@ export class CadastrarProcessoComponent implements OnInit {
     private processoService: ProcessoService,
     private reclamanteService: ReclamanteService,
     private escritorioService: EscritorioService,
-  ) { }
+    private fb:FormBuilder
+  ) {
+    this.processoForm = this.fb.group({
+      numeroProcesso:['',[Validators.required,MaskValidator(this.cnjMask.mask)]],
+      valorCausa:['',[Validators.required,Validators.min(30000)]],
+      reclamanteId:[null,[Validators.required]],
+      escritorioId:[null,[Validators.required]],
+
+    })
+  }
 
   ngOnInit(): void {
     this.reclamanteService
@@ -44,22 +54,21 @@ export class CadastrarProcessoComponent implements OnInit {
   }
 
   cadastrarProcesso(): void {
-    if (this.numeroDeProcesso.length != 20 || this.valorCausa < 300  || this.reclamanteId <= 0
-        || this.reclamanteId == undefined || this.escritorioId <= 0 || this.escritorioId == undefined)
-    {
-      alert('Dados inseridos inválidos, processo não cadastrado')
-      throw new Error();
-    }
-    this.processo = {
-      numeroDeProcesso: this.numeroDeProcesso,
-      valorCausa: this.valorCausa,
-      reclamanteId: this.reclamanteId,
-      escritorioId: this.escritorioId,
-      estadoId: this.estadoId,
-      ativo: true
-    };
-    this.processoService.cadastrarProcesso(this.processo).subscribe(() => {this.processo,alert('Processo cadastrado com sucesso!!')});
-    this.numeroDeProcesso = '';
-    this.valorCausa = 0;
+    let processo:ProcessoDTO = {
+        numeroDeProcesso: this.processoForm.controls.numeroProcesso.value,
+        valorCausa: this.processoForm.controls.valorCausa.value,
+        reclamanteId: this.processoForm.controls.reclamanteId.value,
+        escritorioId: this.processoForm.controls.escritorioId.value
+     }
+     this.processoService.cadastrarProcesso(processo).subscribe(() => {
+      this.postSucess = true
+      this.processoForm.reset()
+     } , (err:HttpErrorResponse) => this.erroPost = err.ok
+     )
+  }
+
+  fecharAlerta(): void {
+    this.erroPost = true;
+    this.postSucess = false;
   }
 }

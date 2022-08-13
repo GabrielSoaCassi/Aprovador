@@ -12,66 +12,64 @@
   </nav>
 </div>
 <div class="container-fluid col-md-4">
-  <form class="row g-3" (ngSubmit)="editarProcesso()" #editarProcessoForm="ngForm">
-    <div class="col-12">
-      <p>Numero do Processo</p>
-      <input disabled [value]="processo?.numeroDeProcesso">
-      <p for="valorCausa" class="form-label">Valor da causa</p>
-      <input
-        required
-        type="number"
-        class="form-control"
-        id="valorCausa"
-        [placeholder]="processo.valorCausa + '  Valor Atual do processo'"
-        [(ngModel)]="valorCausa"
-        [ngModelOptions]="{ standalone: true }"
-        #valor="ngModel"
-      />
-      <small
-        class="text-danger d-block mt-2"
-        *ngIf="valor.invalid && valor.touched">
-        Valor da causa é obrigatório e deve ser maior que R$ 30.000,00
-      </small>
+  <form [formGroup]="processoForm" (ngSubmit)="editarProcesso()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="numeroProcesso">Numero do Processo</label>
+        <input type="text" formControlName="numeroDeProcesso" class="form-control">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="valorCausa">
+          <span class="text-danger" *ngIf="processoForm.controls.valorCausa.invalid">*</span>
+          ValorCausa
+        </label>
+        <input type="number" class="form-control" formControlName="valorCausa">
+      </div>
     </div>
-    <div>
-      <div class="col-md-3">
-        <label for="reclamante" class="form-label m-2">Reclamante</label>
-        <input disabled [value]="processo.reclamante.nome">
-        <select class="form-select px-5" [(ngModel)]="reclamanteId" name="reclamante" required>
-          <option *ngFor="let reclamante of reclamantes" [value]="reclamante.id">
-            {{ reclamante.nome }}
-          </option>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="reclamante"><span class="text-danger"
+          *ngIf="processoForm.controls.reclamanteId.invalid">*</span>Reclamante</label>
+        <select class="custom-select mr-sm-2" formControlName="reclamanteId">
+          <option *ngFor="let reclamante of reclamantes" [ngValue]="reclamante.id">{{reclamante.nome}}</option>
         </select>
       </div>
-      <div class="col-md-3">
-        <label for="escritorioId" class="form-label m-2">Escritorio</label>
-        <input disabled [value]="processo.escritorio.nome">
-        <select class="form-select px-5" [(ngModel)]="escritorioId" name="escritorio" required >
-          <option *ngFor="let escritorio of escritorios" [value]="escritorio.id">
-            {{ escritorio.nome }}
-          </option>
+      <div class="form-group">
+        <label for="escritorio"><span class="text-danger"
+          *ngIf="processoForm.controls.escritorioId.invalid">*</span>Escritório</label>
+        <select class="custom-select mr-sm-2" formControlName="escritorioId">
+          <option *ngFor="let escritorio of escritorios" [ngValue]="escritorio.id">{{escritorio.nome}}</option>
         </select>
       </div>
     </div>
-    <div class="col-lg-12">
-      <label for="estadoId" class="form-label p-1">Status do processo</label>
-      <select [(ngModel)]="estadoId" name="estadoId" [ngModelOptions]="{ standalone: true }">
-        <option [value] = 0>Pendente</option>
-        <option [value] = 1>Aprovado</option>
-        <option [value] = 2>Recusado</option>
-      </select>
-    </div>
-    <div class="col-lg-12">
-      <label for="ativo" class="form-label p-1">Ativo</label>
-      <select [(ngModel)]="ativo" name="ativo" [ngModelOptions]="{ standalone: true }">
-        <option [value] = false>Inativo</option>
-        <option [value] = true>Ativo</option>
-      </select>
-    </div>
-    <div class="col-md-6 justify-content-end mt-1">
-      <button  [disabled]="editarProcessoForm.invalid" type="submit" class="btn btn-success">
-        Atualizar processo
+      <div class="form-group">
+        <label for="estado"><span class="text-danger"
+          *ngIf="processoForm.controls.escritorioId.invalid">*</span>Estado do Processo</label>
+        <select class="custom-select mr-sm-2" formControlName="estadoId">
+          <option [ngValue]="0">Pendente</option>
+          <option [ngValue]="1">Aprovado</option>
+          <option [ngValue]="2">Reprovado</option>
+        </select>
+      </div>
+      <div class="custom-control custom-switch">
+        <input formControlName="ativo" type="checkbox" class="custom-control-input" id="customSwitch1">
+        <label class="custom-control-label" for="customSwitch1" >Inativar Processo ?</label>
+      </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="processoForm.invalid">Atualizar Processo</button>
+  </form>
+    <div [hidden]="erroPost" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Erro ao tentar cadastrar o Processo</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
       </button>
     </div>
-  </form>
+    <div class="container-fluid col-md-4">
+      <div [hidden]="!postSucess" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Processo cadastrado com sucesso</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+        </button>
+    <div class="col-md-6 justify-content-end mt-1">
+    </div>
 </div>

@@ -28,9 +28,8 @@ namespace BackEndAprovacao.Services
         {   
             if (!string.IsNullOrEmpty(processo.NumeroDeProcesso) &&
                 !string.IsNullOrWhiteSpace(processo.NumeroDeProcesso) &&
-                processo.NumeroDeProcesso.Length == 20 && processo.ValorCausa > 30000)
+                processo.NumeroDeProcesso.Length == 22 && processo.ValorCausa > 30000)
             {
-                processo.Ativo = true;
                 return _processo.Adicionar(processo);
             }
             else

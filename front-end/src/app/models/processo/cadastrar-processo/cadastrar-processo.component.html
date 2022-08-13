@@ -11,43 +11,51 @@
     </ol>
   </nav>
 </div>
-<div class="container-fluid col-md-4">
-  <form class="row g-3" (ngSubmit)="cadastrarProcesso()" #cadastrarForm="ngForm">
-    <div class="col">
-      <label for="numeroDeProcesso" class="form-label">Nº de Processo (Somente números)</label>
-      <input [textMask]="cnjMask" required maxlength="20" max="20" type="text" class="form-control"
-        id="numeroDeProcesso" [(ngModel)]="numeroDeProcesso" name="numero" #inputInvalid="ngModel" />
-      <p *ngIf="inputInvalid.invalid && inputInvalid.touched" class="text-danger">
-        Digite corretamente o nº do processo (SOMENTE NÚMEROS)
-      </p>
-    </div>
-    <div class="col-12">
-      <label for="valorCausa" class="form-label">Valor da causa</label>
-      <input type="number" class="form-control" id="valorCausa" placeholder="R$35000" [(ngModel)]="valorCausa"
-        name="valor" />
-    </div>
-    <div>
-      <div class="col-auto">
-        <label for="reclamante" class="form-label m-2">Reclamante</label>
-        <select class="form-select" [(ngModel)]="reclamanteId" [ngModelOptions]="{ standalone: true }">
-          <option *ngFor="let reclamante of reclamantes" [value]="reclamante.id">
-            {{ reclamante.nome }}
-          </option>
-        </select>
+<div class="container-fluid col-md-8">
+  <form [formGroup]="processoForm" (ngSubmit)="cadastrarProcesso()">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="numeroProcesso"><span class="text-danger"
+            *ngIf="processoForm.controls.numeroProcesso.invalid">*</span>Numero do Processo</label>
+        <input type="text" formControlName="numeroProcesso" [textMask]="cnjMask" class="form-control">
       </div>
-      <div class="col-auto">
-        <label for="escritorioId" class="form-label m-2">Escritório</label>
-        <select class="form-select" [(ngModel)]="escritorioId" [ngModelOptions]="{ standalone: true }">
-          <option *ngFor="let escritorio of escritorios" [value]="escritorio.id">
-            {{ escritorio.nome }}
-          </option>
-        </select>
+      <div class="form-group col-md-6">
+        <label for="valorCausa">
+          <span class="text-danger" *ngIf="processoForm.controls.valorCausa.invalid">*</span>
+          ValorCausa
+        </label>
+        <input type="number" class="form-control" formControlName="valorCausa">
       </div>
     </div>
-    <div class="col-md-6 justify-content-end mt-1">
-      <button type="submit" class="btn btn-success" [disabled]="cadastrarForm.invalid">
-        Cadastrar
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="reclamante"><span class="text-danger"
+          *ngIf="processoForm.controls.reclamanteId.invalid">*</span>Reclamante</label>
+        <select class="custom-select mr-sm-2" formControlName="reclamanteId">
+          <option *ngFor="let reclamante of reclamantes" [ngValue]="reclamante.id">{{reclamante.nome}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="escritorio"><span class="text-danger"
+          *ngIf="processoForm.controls.escritorioId.invalid">*</span>Escritório</label>
+        <select class="custom-select mr-sm-2" formControlName="escritorioId">
+          <option *ngFor="let escritorio of escritorios" [ngValue]="escritorio.id">{{escritorio.nome}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="processoForm.invalid">Cadastrar Processo</button>
+  </form>
+    <div [hidden]="erroPost" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Erro ao tentar cadastrar o Processo</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
       </button>
     </div>
-  </form>
+    <div class="container-fluid col-md-4">
+      <div [hidden]="!postSucess" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Processo cadastrado com sucesso</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" (click)="fecharAlerta()">&times;</span>
+        </button>
+      </div>
 </div>

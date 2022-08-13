@@ -6,7 +6,7 @@ namespace BackEndAprovacao.Dto.ProcessoDto
     public class CreateProcessoDto
     {
         [Required]
-        [StringLength(20, MinimumLength = 20, ErrorMessage = "Verifique se o numero do processo foi digitado corretamente")]
+        [StringLength(22, MinimumLength = 22, ErrorMessage = "Verifique se o numero do processo foi digitado corretamente")]
         public string NumeroDeProcesso { get; set; }
         [Required]
         public double ValorCausa { get; set; }

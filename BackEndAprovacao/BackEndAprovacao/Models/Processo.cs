@@ -6,7 +6,7 @@ namespace BackEndAprovacao.Models
     public class Processo : EntidadeBase
     {
         [Required]
-        [StringLength(20, MinimumLength = 20, ErrorMessage = "Verifique se o numero do processo foi digitado corretamente")]
+        [StringLength(22, MinimumLength = 22, ErrorMessage = "Verifique se o numero do processo foi digitado corretamente")]
         public string NumeroDeProcesso { get; set; }
         public double ValorCausa { get; set; }
         public int ReclamanteId { get; set; }
@@ -20,6 +20,7 @@ namespace BackEndAprovacao.Models
         public Processo()
         {
             EstadoId = EProcessoEstado.Pendente;
+            Ativo = true; 
         }
     }
 }
