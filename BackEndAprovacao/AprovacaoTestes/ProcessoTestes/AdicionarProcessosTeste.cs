@@ -17,7 +17,7 @@ namespace AprovacaoTestes.ProcessoTestes
             var processoFake = new Processo()
             {
                 Id = 1,
-                NumeroDeProcesso = "01234567890123456789",
+                NumeroDeProcesso = "1595466-4666.6.65.5455",
                 ValorCausa = 300000,
                 EscritorioId = 1,
                 ReclamanteId = 1
